@@ -89,10 +89,10 @@ function displayBooks () {
 
         deleteBook.addEventListener("click", () => {
             
-            // if (bookTitle.textContent === myLibrary[i].title) {
-            //     delete myLibrary[i];
+            if (bookTitle.textContent === myLibrary[i].title) {
+                myLibrary.splice(i, 1);
                 
-            // }
+            }
             displayBooksDiv.removeChild(bookCard);
         })
         bookTitle.setAttribute("class", "title");
