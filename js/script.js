@@ -41,7 +41,8 @@ submitForm.addEventListener("click", (e) => {
 });
 
 showBooksButton.addEventListener("click", () => {
-    displayBooksDiv.style.display = "block";
+    bookForm.style.display = "none";
+    displayBooksDiv.style.display = "grid";
     displayBooks();
 })
 
@@ -77,11 +78,41 @@ function addBookToLibrary(title, author, pages, read) {
 
 function displayBooks () {
     for (let i = 0; i < myLibrary.length; i++) {
-        const book = document.createElement("p");
-        const element = myLibrary[i].title + " by " + myLibrary[i].author + ". It has " + myLibrary[i].pages + " pages and it " + myLibrary[i].read;
-        book.textContent = element;
+        const bookCard = document.createElement("div");
+        const bookTitle = document.createElement("p");
+        const bookAuthor = document.createElement("p");
+        const bookPages = document.createElement("p");
+        const bookStatus = document.createElement("p");
+        const deleteBook = document.createElement("button");
+
+        deleteBook.textContent = "Delete Book";
+
+        deleteBook.addEventListener("click", () => {
+            
+            // if (bookTitle.textContent === myLibrary[i].title) {
+            //     delete myLibrary[i];
+                
+            // }
+            displayBooksDiv.removeChild(bookCard);
+        })
+        bookTitle.setAttribute("class", "title");
+        bookCard.setAttribute("class", "card");
+
+        bookTitle.textContent = myLibrary[i].title;
+        bookAuthor.textContent = "Author: " + myLibrary[i].author;
+        bookPages.textContent = "No. of Pages: " + myLibrary[i].pages + " pages";
+        bookStatus.textContent = "Status: " + myLibrary[i].read;
+
+        // const element = myLibrary[i].title + " by " + myLibrary[i].author + ". It has " + myLibrary[i].pages + " pages and it " + myLibrary[i].read;
+        // book.textContent = element;
         //container.appendChild(book);
-        displayBooksDiv.appendChild(book);
+
+        bookCard.appendChild(bookTitle);
+        bookCard.appendChild(bookAuthor);
+        bookCard.appendChild(bookPages);
+        bookCard.appendChild(bookStatus);
+        bookCard.appendChild(deleteBook);
+        displayBooksDiv.appendChild(bookCard);
         
     }
 }
