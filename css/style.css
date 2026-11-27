@@ -2,13 +2,6 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.container {
-
-}
-
-button {
-
-}
 
 .book-created-message {
     display: none;
@@ -35,6 +28,21 @@ form .input-field-item {
     margin-top: 5px;
     border-radius: 10px;
     width: 300px;
+}
+
+input.invalid {
+    border: 2px solid #d93025;
+}
+
+input.valid {
+    border: 2px solid #188038;
+}
+
+.error-message {
+    color: #d93025;
+    font-size: 0.85rem;
+    min-height: 1.2em;
+    margin-top: 0.25rem;
 }
 
 .read-input {
@@ -90,10 +98,6 @@ form .input-field-item {
     border-radius: 10px;
     font-weight: 600;
     color: white;
-  }
-
-  .delete-btn {
-
   }
   
   .card .card-icons {
