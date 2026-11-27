@@ -4,12 +4,65 @@ const newBookButton = document.querySelector("#new-book");
 const showBooksButton = document.querySelector("#show-books");
 const displayBooksDiv = document.querySelector(".display-books");
 const bookForm = document.querySelector("form");
-let titleinput = document.querySelector("#title");
+let titleInput = document.querySelector("#title");
 let authorInput = document.querySelector("#author");
 let pagesInput = document.querySelector("#pages");
 let readStatus = document.querySelectorAll(".read-status-input");
 let bookImageInput = document.querySelector("#book-image");
-const submitForm = document.querySelector("#submit-form");
+// get the form and all input fields
+const form = document.querySelector("#book-form");
+const inputs = form.querySelectorAll("input[aria-describedby]");
+
+
+
+function validateField(input) {
+  const errorElement = document.getElementById(`${input.id}Error`);
+  let errorMessage = '';
+
+  // Check HTML5 validity states
+  if (input.validity.valueMissing) {
+
+    if (input.id === 'title') {
+    errorMessage = 'The Title is required.';
+    } else if (input.id === 'author') {
+    errorMessage = 'The Author is required.';
+    } else if (input.id === 'pages') {
+    errorMessage = 'The Pages field is required.';
+    }
+  } 
+
+
+  // Update UI based on validity
+  if (errorMessage) {
+    input.classList.add('invalid');
+    input.classList.remove('valid');
+    input.setAttribute('aria-invalid', 'true');
+    errorElement.textContent = errorMessage;
+    return false;
+  } else {
+    input.classList.remove('invalid');
+    input.classList.add('valid');
+    input.setAttribute('aria-invalid', 'false');
+    errorElement.textContent = '';
+    return true;
+  }
+}
+
+// Attach real-time listeners to every input
+inputs.forEach((input) => {
+  // Validate when the user leaves the field
+  input.addEventListener('blur', () => validateField(input));
+
+  // Re-validate while typing if the field was already marked invalid
+  input.addEventListener('input', () => {
+    if (input.classList.contains('invalid')) {
+      validateField(input);
+    }
+  });
+});
+
+
+
 
 newBookButton.addEventListener("click", () => {
     displayBooksDiv.innerHTML = "";
@@ -20,10 +73,16 @@ newBookButton.addEventListener("click", () => {
 
 });
 
-submitForm.addEventListener("click", (e) => {
-
+form.addEventListener("submit", (e) => {
     e.preventDefault();
-    const title = titleinput.value;
+
+    const isFormValid = Array.from(inputs).every(validateField);
+    if (!isFormValid) {
+        form.querySelector(".invalid").focus();
+        return;
+    }
+
+    const title = titleInput.value;
     const author = authorInput.value;
     const pages = pagesInput.value;
     const file = bookImageInput.files[0];
@@ -35,12 +94,8 @@ submitForm.addEventListener("click", (e) => {
         
     }
 
-    //console.log(`${title} ${author} ${pages}`)
-    //console.log(read);
 
-    // addBookToLibrary(title, author, pages, read);
-    // bookForm.reset();
-    // bookForm.style.display = "none";
+
 
     if (file) {
         const reader = new FileReader();
@@ -68,30 +123,16 @@ showBooksButton.addEventListener("click", () => {
 
 
 
-class Book {
-    constructor(title, author, pages, read, image) {
-        this.title = title;
-        this.author = author;
-        this.pages = pages;
-        this.read = read;
-        this.image = image;
-        this.info = function () {
-            return `${title} by ${author}, ${pages}, ${read}`;
-        };
-    }
+function Book (title, author, pages, read, image) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
+    this.image = image;
+    this.info = function () {
+        return `${title} by ${author}, ${pages}, ${read}`;
+    };
 }
-
-
-// function Book (title, author, pages, read, image) {
-//     this.title = title;
-//     this.author = author;
-//     this.pages = pages;
-//     this.read = read;
-//     this.image = image;
-//     this.info = function () {
-//         return `${title} by ${author}, ${pages}, ${read}`;
-//     };
-// }
 
 
 
@@ -163,5 +204,3 @@ function displayBooks () {
         
     }
 }
-
-//displayBooks();

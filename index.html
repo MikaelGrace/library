@@ -16,22 +16,26 @@
 
         </div>
 
-        <form action="" method="post">
+        <form action="" method="post" id="book-form" enctype="multipart/form-data" novalidate>
             <div class="input-field-item">
                 <label for="title">Title</label>
-                <input type="text" name="title" id="title" class="input-field">
+                <input type="title" name="title" id="title" class="input-field" required aria-describedby="titleError">
+                <span id="titleError" class="error-message" aria-live="polite"></span>
             </div>
             <div class="input-field-item">
                 <label for="author">Author</label>
-                <input type="text" name="author" id="author" class="input-field">
+                <input type="author" name="author" id="author" class="input-field" required aria-describedby="authorError">
+                <span id="authorError" class="error-message" aria-live="polite"></span>
             </div>
             <div class="input-field-item">
                 <label for="pages">Pages</label>
-                <input type="number" name="pages" id="pages" class="input-field">
+                <input type="number" name="pages" id="pages" class="input-field" required aria-describedby="pagesError">
+                <span id="pagesError" class="error-message" aria-live="polite"></span>
             </div>
-            <div class="input-field-item">
+            <div class="book-input-field-item">
                 <label for="book-image">Select Image</label>
                 <input type="file" name="image" id="book-image" accept="images/*" class="input-field">
+                <!-- <span id="imageError" class="error-message" aria-live="polite"></span> -->
             </div>
             <div class="read-input">
                 <span class="read-status">Has been read?</span>
